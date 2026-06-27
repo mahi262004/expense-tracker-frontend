@@ -25,7 +25,7 @@ function AuthLayout({ toggle, title, subtitle, children }) {
 
         <div className="auth-headline">
           <h1>
-            See where every <span className="auth-gold-text">rupee</span>{" "}
+            See where every <span className="auth-gold-text">penny</span>{" "}
             goes.
           </h1>
           <p>
