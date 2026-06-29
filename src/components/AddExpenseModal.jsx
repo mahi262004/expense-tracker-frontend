@@ -50,7 +50,15 @@ function AddExpenseModal({ onClose, onSaved, transaction, title }) {
       }
       onSaved();
     } catch (err) {
-      setError(isEditing ? "Failed to update transaction" : "Failed to add expense");
+      const data = err.response?.data;
+      const fallback = isEditing
+        ? "Failed to update transaction"
+        : "Failed to add expense";
+      const message =
+        data?.errors?.map((e) => e.message).join(", ") ||
+        data?.message ||
+        fallback;
+      setError(message);
       setSaving(false);
     }
   };

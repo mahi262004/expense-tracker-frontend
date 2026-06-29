@@ -20,10 +20,15 @@ function Signin() {
         localStorage.setItem("token", res.data.token);
         navigate("/");
       } else {
-        setError(res.data.message); 
+        setError(res.data.message);
       }
     } catch (err) {
-      setError("Something went wrong. Try again.");
+      const data = err.response?.data;
+      const message =
+        data?.errors?.map((e) => e.message).join(", ") ||
+        data?.message ||
+        "Something went wrong. Try again.";
+      setError(message);
     }
   };
 

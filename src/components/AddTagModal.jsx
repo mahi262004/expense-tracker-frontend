@@ -28,7 +28,13 @@ function AddTagModal({ onClose, onSaved, tagItem }) {
       }
       onSaved();
     } catch (err) {
-      setError(isEditing ? "Failed to update tag" : "Failed to add tag");
+      const data = err.response?.data;
+      const fallback = isEditing ? "Failed to update tag" : "Failed to add tag";
+      const message =
+        data?.errors?.map((e) => e.message).join(", ") ||
+        data?.message ||
+        fallback;
+      setError(message);
       setSaving(false);
     }
   };

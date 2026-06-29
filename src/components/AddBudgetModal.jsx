@@ -63,11 +63,15 @@ function AddBudgetModal({ onClose, onSaved, budgetItem }) {
       }
       onSaved();
     } catch (err) {
-      setError(
-        isEditing
-          ? "Failed to update budget"
-          : "Failed to add budget. You may already have one for this tag/month."
-      );
+      const data = err.response?.data;
+      const fallback = isEditing
+        ? "Failed to update budget"
+        : "Failed to add budget. You may already have one for this tag/month.";
+      const message =
+        data?.errors?.map((e) => e.message).join(", ") ||
+        data?.message ||
+        fallback;
+      setError(message);
       setSaving(false);
     }
   };
