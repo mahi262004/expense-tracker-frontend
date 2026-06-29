@@ -7,10 +7,10 @@ import "../styles/dashboard.css";
 const DONUT_COLORS = [
   "#c9a24b",
   "#e0944a",
-  "#8b6f47",
   "#b4694f",
-  "#a08c5b",
-  "#9c6b4f",
+  "#6f9c87",
+  "#6f87a8",
+  "#97698c",
 ];
 
 function Dashboard() {
@@ -44,7 +44,7 @@ function Dashboard() {
     return <div className="dash-loading">Loading...</div>;
   }
 
-  // ---------------- KPI totals ----------------
+  
   const totalIncome = transactions
     .filter((t) => t.type === "income")
     .reduce((sum, t) => sum + t.value, 0);
@@ -55,7 +55,7 @@ function Dashboard() {
 
   const balance = totalIncome - totalExpense;
 
-  // ---------------- Spending trend: last 7 days ----------------
+  
   const last7Days = Array.from({ length: 7 }).map((_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (6 - i));
@@ -90,7 +90,7 @@ function Dashboard() {
 
   const hasSpending = dailyExpenses.some((v) => v > 0);
 
-  // ---------------- Expense breakdown by tag ----------------
+  
   const tagTotals = {};
   transactions
     .filter((t) => t.type === "expense")
@@ -127,7 +127,7 @@ function Dashboard() {
     return arc;
   });
 
-  // ---------------- Recent transactions ----------------
+ 
   const recent = [...transactions]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);

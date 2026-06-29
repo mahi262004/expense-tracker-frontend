@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signin } from "../api";
+import AuthLayout from "../components/AuthLayout";
+import AuthToggle from "../components/AuthToggle";
+import "../styles/auth.css";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -25,30 +28,43 @@ function Signin() {
   };
 
   return (
-    <div>
-      <h1>Sign In</h1>
+    <AuthLayout
+      toggle={<AuthToggle active="signin" />}
+      title="Welcome back"
+      subtitle="Sign in to see where your money went."
+    >
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign In</button>
+        <div className="auth-field">
+          <label className="auth-label">Email</label>
+          <input
+            className="auth-input"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="auth-field">
+          <label className="auth-label">Password</label>
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <button className="auth-button" type="submit">
+          Sign in
+        </button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
-    </div>
+
+      {error && <div className="auth-error">{error}</div>}
+    </AuthLayout>
   );
 }
 

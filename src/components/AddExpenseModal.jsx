@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
-import { createTransaction, getTags } from "../api";
+import { createTransaction, updateTransaction, getTags } from "../api";
 import "../styles/dashboard.css";
 
-function AddExpenseModal({ onClose, onSaved }) {
+function AddExpenseModal({ onClose, onSaved, transaction, title }) {
+  const isEditing = Boolean(transaction);
+
   const [tags, setTags] = useState([]);
-  const [transactionName, setTransactionName] = useState("");
-  const [value, setValue] = useState("");
-  const [type, setType] = useState("expense");
-  const [tag, setTag] = useState("");
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [transactionName, setTransactionName] = useState(
+    transaction?.transactionName || ""
+  );
+  const [value, setValue] = useState(transaction?.value || "");
+  const [type, setType] = useState(transaction?.type || "expense");
+  const [tag, setTag] = useState(
+    transaction?.tag?._id || transaction?.tag || ""
+  );
+  const [date, setDate] = useState(
+    transaction
+      ? new Date(transaction.date).toISOString().slice(0, 10)
+      : new Date().toISOString().slice(0, 10)
+  );
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -29,24 +39,34 @@ function AddExpenseModal({ onClose, onSaved }) {
       return;
     }
 
+    const payload = { transactionName, value: Number(value), type, tag, date };
+
     setSaving(true);
     try {
-      await createTransaction(
-        { transactionName, value: Number(value), type, tag, date },
-        token
-      );
+      if (isEditing) {
+        await updateTransaction(transaction._id, payload, token);
+      } else {
+        await createTransaction(payload, token);
+      }
       onSaved();
     } catch (err) {
-      setError("Failed to add expense. Try again.");
+      setError(isEditing ? "Failed to update transaction" : "Failed to add expense");
       setSaving(false);
     }
   };
+
+  const modalTitle = title || (isEditing ? "Edit transaction" : "Add expense");
+  const buttonLabel = saving
+    ? "Saving..."
+    : isEditing
+    ? "Update transaction"
+    : "Save expense";
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2 className="modal-title">Add expense</h2>
+          <h2 className="modal-title">{modalTitle}</h2>
           <button
             className="modal-close"
             onClick={onClose}
@@ -126,7 +146,7 @@ function AddExpenseModal({ onClose, onSaved }) {
           {error && <div className="modal-error">{error}</div>}
 
           <button className="modal-save-btn" type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save expense"}
+            {buttonLabel}
           </button>
         </form>
 

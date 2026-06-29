@@ -397,6 +397,193 @@
   color: var(--rose);
 }
 
+/* ---------------- Transactions list rows (hover-reveal actions) ---------------- */
+
+.tx-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.15s;
+}
+
+.tx-row:last-child {
+  border-bottom: none;
+}
+
+.tx-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tx-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.tx-row:hover .tx-actions {
+  opacity: 1;
+}
+
+.tx-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: var(--grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tx-action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text);
+}
+
+.tx-action-btn-danger:hover {
+  background: rgba(180, 105, 79, 0.2);
+  color: var(--rose);
+}
+
+/* ---------------- Tags list ---------------- */
+
+.tag-panel {
+  max-width: 600px;
+}
+
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.15s;
+}
+
+.tag-row:last-child {
+  border-bottom: none;
+}
+
+.tag-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tag-row:hover .tx-actions {
+  opacity: 1;
+}
+
+.tag-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tag-name {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.modal-card-small {
+  max-width: 320px;
+}
+
+/* ---------------- Budget cards ---------------- */
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.budget-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 18px;
+  transition: border-color 0.15s;
+}
+
+.budget-card-over {
+  border-color: rgba(180, 105, 79, 0.45);
+}
+
+.budget-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.budget-card-header .tx-actions {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.budget-card:hover .tx-actions {
+  opacity: 1;
+}
+
+.budget-card-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.budget-card-month {
+  font-size: 12px;
+  color: var(--grey-dim);
+  margin-top: 2px;
+}
+
+.budget-stat {
+  font-size: 13px;
+  color: var(--grey);
+  margin-bottom: 4px;
+}
+
+.budget-stat-highlight {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 8px 0 12px;
+}
+
+.budget-over-text {
+  color: var(--rose);
+}
+
+.budget-under-text {
+  color: var(--amber);
+}
+
+.budget-progress-track {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.budget-progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 4px;
+  transition: width 0.2s;
+}
+
+.budget-progress-over {
+  background: var(--rose);
+}
+
 /* ---------------- Add Expense modal ---------------- */
 
 .modal-overlay {
